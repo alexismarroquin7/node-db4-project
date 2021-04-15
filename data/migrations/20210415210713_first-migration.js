@@ -4,7 +4,8 @@ exports.up = function(knex) {
   .createTable('recipies', tbl => {
     tbl.increments('recipe_id');
     tbl.string('recipe_name').unique().notNullable();
-    tbl.timestamp('created_at');
+    tbl.timestamp('created_at')
+      .defaultTo(knex.fn.now());
   })
   .createTable('ingredients', tbl => {
     tbl.increments('ingredient_id');
