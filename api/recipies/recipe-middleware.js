@@ -13,3 +13,7 @@ const checkRecipeId = async (req, res, next) => {
     next(err);
   }
 }
+
+module.exports = {
+  checkRecipeId
+}

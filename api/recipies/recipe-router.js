@@ -1,4 +1,5 @@
 const Recipe = require('./recipe-model');
+const mw = require('./recipe-middleware');
 const router = require('express').Router();
 
 router.get(`/`, async (req, res, next) => {
@@ -10,8 +11,13 @@ router.get(`/`, async (req, res, next) => {
   }
 });
 
-router.get(`/:recipe_id`, (req, res, next) => {
-
+router.get(`/:recipe_id`, mw.checkRecipeId, async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.recipe_id);
+    res.status(200).json(recipe);
+  } catch {
+    next(err);
+  }
 });
 
 router.use((err, req, res, next) => {
